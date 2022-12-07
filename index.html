@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Kommenttisivu</title>
+        <script src="kommenttisivu.js"></script>
+    </head>
+    <body>
+        <h1>Kommenttisivu</h1>
+        <form action="kasittelija" method="post" id="kommenttilomake">
+            <fieldset id="kommentin_lisays">
+                <legend>Lisää kommentti:</legend>
+                <p>
+                    <label>Nimi<input type="text" pattern=".*\S+.*" name="jasen_1" title="Kirjoita nimesi, vähintään 1 merkki ilman välilyöntejä" /></label>
+                </p>
+                <p>
+                    <label for="kommenttikentta">Kommentti:</label>
+                    <textarea id="kommenttikentta" rows="10" columns="50" pattern=".*\S+.*" name="jasen_2" title="Kirjoita kommentti tähän"></textarea>
+                </p>
+                <input type="submit" value="Tallenna" />
+            </fieldset>
+        </form>
+        <div id="kommentit">
+            
+        </div>
+    </body>
+</html>
