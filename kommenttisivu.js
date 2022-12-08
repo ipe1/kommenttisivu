@@ -78,10 +78,28 @@ function muokkaaKommenttia(kommenttiElementti) {
     // Korvataan viestielementti muokattavalla tekstikentällä
     let viestiElementit = kommenttiElementti.getElementsByClassName("viesti");
     kommenttiElementti.removeChild(viestiElementit[0]);
+    let muokkausElementti = document.createElement("p");
     let muokkausKentta = document.createElement("textarea");
-    kommenttiElementti.firstChild.append(muokkausKentta);
+    muokkausKentta.setAttribute("cols", "50");
+    muokkausKentta.value = kommentti.viesti;
+    muokkausElementti.appendChild(muokkausKentta);
+    kommenttiElementti.firstChild.append(muokkausElementti);
+    
+    // Korvataan muokkauspainike tallennuspainikkeella
+    let painikeElementit = kommenttiElementti.getElementsByTagName("button");
+    kommenttiElementti.removeChild(painikeElementit[0]);
+    let tallennusPainike = document.createElement("button");
+    tallennusPainike.textContent = "Tallenna";
+    kommenttiElementti.appendChild(tallennusPainike);
 
-    console.log("Muokattu kommenttia " + id + "!");
+    // Lisätään tallennuspainikkeelle toiminnallisuus jossa tallennetaan muokattu kommentti ja päivitetään listaus
+    tallennusPainike.addEventListener("click", function(e) {
+        kommentti.viesti = muokkausKentta.value;
+        paivitaKommenttiListaus();
+
+        console.log("Muokattu kommenttia " + id + "!");
+    });
+
 }
 
 window.addEventListener("load", function() {
