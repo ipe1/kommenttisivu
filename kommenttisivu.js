@@ -1,11 +1,13 @@
 "use strict";
 //@ts-check
 
-let pvm = new Date();
-let data = [];
+const pvm = new Date();
+const kommentit = [];
+let idNro = 1;
 
 // Määritellään kommentti-objektin rakenne
-function Kommentti(nimi, viesti, paiva) {
+function Kommentti(id, nimi, viesti, paiva) {
+    this.id = id;
     this.nimi = nimi;
     this.viesti = viesti;
     this.paiva = paiva;
@@ -13,9 +15,9 @@ function Kommentti(nimi, viesti, paiva) {
 
 
 /**
- * Luo sivulle kommenttilistauksen
+ * Päivittää sivulle kommenttilistauksen
  */
- function luoKommenttiListaus() {
+ function paivitaKommenttiListaus() {
     // Haetaan kommenttilistauksen alku HTML-dokumentista
     let kommenttiListaus = document.getElementById("kommentit");
 
@@ -23,10 +25,52 @@ function Kommentti(nimi, viesti, paiva) {
     while (kommenttiListaus.firstChild) {
         kommenttiListaus.removeChild(kommenttiListaus.firstChild);
     }
+
+    // Lisätään kommentit näkyville kommentit-osioon
+    for (let kommentti of kommentit) {
+        // Luodaan ensin kommenttielementti
+        let kommenttiElementti = document.createElement("li");
+        kommenttiElementti.setAttribute("id", kommentti.id);
+        // Luodaan kirjoittajan nimelle oma elementtinsä
+        let nimiElementti = document.createElement("strong");
+        nimiElementti.textContent = kommentti.nimi;
+        // Ja varsinainen kommentti
+        let viestiElementti = document.createElement("p");
+        viestiElementti.textContent = kommentti.viesti;
+        // Lopuksi päivämäärä ja muokkauspainike
+        let pvmElementti = document.createElement("p");
+        pvmElementti.setAttribute("class", "pvm");
+        pvmElementti.textContent = kommentti.paiva;
+        let muokkauspainike = document.createElement("button");
+        muokkauspainike.setAttribute("class", "muokkauspainike");
+        muokkauspainike.textContent = "Muokkaa";
+
+        // Lisätään edellä luodut elementit DOM-puuhun
+        kommenttiElementti.appendChild(nimiElementti);
+        kommenttiElementti.appendChild(viestiElementti);
+        kommenttiElementti.appendChild(pvmElementti);
+        kommenttiElementti.appendChild(muokkauspainike);
+        kommenttiListaus.appendChild(kommenttiElementti);
+
+        // Lisätään muokkauspainikkeelle myös klikkauksen kuuntelija
+        muokkauspainike.addEventListener("click", function(e) {
+            muokkaaKommenttia(e.target.parentElement);
+        });
+    }
 }
 
 
+/**
+ * Muokkaa yksittäistä kommenttia
+ */
+function muokkaaKommenttia(Kommentti) {
+    console.log("Kommentin id: "+ Kommentti.id);
+}
+
 window.addEventListener("load", function() {
+    // Päivitetään kommenttilistaus
+    paivitaKommenttiListaus();
+
     // Käsitellään lomakkeen lähettäminen
     let kommenttiLomake = document.getElementById("kommenttilomake");
     kommenttiLomake.addEventListener("submit", function(e) {
@@ -41,15 +85,20 @@ window.addEventListener("load", function() {
     kommenttiLomake.reportValidity();
 
     // Viedään tiedot data-objektiin
-    data.push(new Kommentti(nimikentta.value, kommenttikentta.value, aika));
+    kommentit.push(new Kommentti("k" + idNro, nimikentta.value, kommenttikentta.value, aika));
+    // Kasvatetaan idNro:ta mahdollista seuraavaa kommenttia varten
+    idNro++;
 
     console.log("Kommentti tallennettu!");
     console.log(aika);
+    
+    // Päivitetään kommenttilistaus
+    paivitaKommenttiListaus();
 
     // Tyhjennetään lopuksi lomake
     kommenttiLomake.reset();
 
-    console.log(data);
-
+    console.log(kommentit);
     });
+
 });

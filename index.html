@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
     <head>
         <meta charset="UTF-8" />
         <title>Kommenttisivu</title>
@@ -11,22 +11,27 @@
             <fieldset id="kommentin_lisays">
                 <legend>Lisää kommentti:</legend>
                 <p>
-                    <label>Nimi*<input type="text" id="nimikentta" pattern=".*\S+.*" name="nimi" required="required" title="Kirjoita nimesi, vähintään 1 merkki ilman välilyöntejä" /></label>
+                    <label>Nimi*<input type="text" id="nimikentta" maxlength="50" pattern=".*\S+.*" name="nimi" required="required" title="Kirjoita nimesi, vähintään 1 merkki ilman välilyöntejä" /></label>
                 </p>
                 <p>
                     <label for="kommenttikentta">Kommentti*</label>
-                    <textarea id="kommenttikentta" rows="10" columns="50" name="viesti" required="required" title="Kirjoita kommentti tähän."></textarea>
+                    <textarea id="kommenttikentta" rows="10" cols="50" name="viesti" required="required" title="Kirjoita kommentti tähän."></textarea>
                 </p>
                 <input type="submit" value="Tallenna" />
             </fieldset>
         </form>
         <ul id="kommentit">
-            <li>
+        <!--
+        Alla oleva listaelementti mallina kommentin rakenteesta:
+
+            <li id="k0">
                 <strong>Joku</strong>
                 <p>Tämä on kommentti</p>
                 <p class="pvm">11.2.2020</p>
                 <button>Muokkaa</button>
             </li>
+            
+        -->
         </ul>
     </body>
 </html>
