@@ -1,6 +1,7 @@
 "use strict";
 //@ts-check
 
+// Luodaan päivämääräobjekti, kommenttitaulukko sekä kommenteille juokseva id
 const pvm = new Date();
 const kommentit = [];
 let idNro = 1;
