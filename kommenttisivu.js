@@ -36,6 +36,7 @@ function Kommentti(id, nimi, viesti, paiva) {
         nimiElementti.textContent = kommentti.nimi;
         // Ja varsinainen kommentti
         let viestiElementti = document.createElement("p");
+        viestiElementti.setAttribute("class", "viesti");
         viestiElementti.textContent = kommentti.viesti;
         // Lopuksi päivämäärä ja muokkauspainike
         let pvmElementti = document.createElement("p");
@@ -63,8 +64,24 @@ function Kommentti(id, nimi, viesti, paiva) {
 /**
  * Muokkaa yksittäistä kommenttia
  */
-function muokkaaKommenttia(Kommentti) {
-    console.log("Kommentin id: "+ Kommentti.id);
+function muokkaaKommenttia(kommenttiElementti) {
+    // Otetaan nykyinen viesti talteen
+    let id = kommenttiElementti.id;
+    let kommentti;
+    for (let k of kommentit) {
+        if (k.id === id) {
+            kommentti = k;
+        }
+    }
+    console.log("Alkuperäinen kommentti: " + kommentti.viesti);
+
+    // Korvataan viestielementti muokattavalla tekstikentällä
+    let viestiElementit = kommenttiElementti.getElementsByClassName("viesti");
+    kommenttiElementti.removeChild(viestiElementit[0]);
+    let muokkausKentta = document.createElement("textarea");
+    kommenttiElementti.firstChild.append(muokkausKentta);
+
+    console.log("Muokattu kommenttia " + id + "!");
 }
 
 window.addEventListener("load", function() {
